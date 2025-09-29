@@ -590,6 +590,53 @@ export interface PluginContentReleasesReleaseAction
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 50;
+        },
+        number
+      >;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -741,53 +788,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
-  info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<
-        {
-          min: 1;
-          max: 50;
-        },
-        number
-      >;
-    code: Attribute.String & Attribute.Unique;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiEventEvent extends Schema.CollectionType {
   collectionName: 'events';
   info: {
@@ -823,46 +823,6 @@ export interface ApiEventEvent extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiPlanPlan extends Schema.CollectionType {
-  collectionName: 'plans';
-  info: {
-    singularName: 'plan';
-    pluralName: 'plans';
-    displayName: 'Plan';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    totalCredits: Attribute.Integer;
-    basicAxisCredits: Attribute.Integer;
-    commonAxisCredits: Attribute.Integer;
-    electiveCredits: Attribute.Integer;
-    totalSemesters: Attribute.Integer;
-    firstSemester: Attribute.Text;
-    secondSemester: Attribute.Text;
-    thirdSemester: Attribute.String;
-    fourthSemester: Attribute.String;
-    fifthSemester: Attribute.String;
-    sixthSemester: Attribute.Text;
-    seventhSemester: Attribute.Text;
-    eighthSemester: Attribute.Text;
-    integratorAxisCredits: Attribute.Integer;
-    obligatoryCredits: Attribute.Integer;
-    professionalAxisCredits: Attribute.Integer;
-    specialistAxisCredits: Attribute.Integer;
-    code: Attribute.UID & Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::plan.plan', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::plan.plan', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -936,51 +896,6 @@ export interface ApiSoyLccVideoSoyLccVideo extends Schema.CollectionType {
   };
 }
 
-export interface ApiSubjectSubject extends Schema.CollectionType {
-  collectionName: 'subjects';
-  info: {
-    singularName: 'subject';
-    pluralName: 'subjects';
-    displayName: 'Subject';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    plan: Attribute.String;
-    axis: Attribute.Enumeration<
-      [
-        'Com\u00FAn',
-        'B\u00E1sico',
-        'Profesional',
-        'Especializante',
-        'Integrador'
-      ]
-    >;
-    credits: Attribute.Integer;
-    key: Attribute.UID;
-    name: Attribute.String;
-    requires: Attribute.Text;
-    serialization: Attribute.Text;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::subject.subject',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::subject.subject',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -995,15 +910,13 @@ declare module '@strapi/types' {
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
+      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'plugin::i18n.locale': PluginI18NLocale;
       'api::event.event': ApiEventEvent;
-      'api::plan.plan': ApiPlanPlan;
       'api::proyect-opportunity.proyect-opportunity': ApiProyectOpportunityProyectOpportunity;
       'api::soy-lcc-video.soy-lcc-video': ApiSoyLccVideoSoyLccVideo;
-      'api::subject.subject': ApiSubjectSubject;
     }
   }
 }
