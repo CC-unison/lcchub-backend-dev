@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "blogs",
+  "info": {
+    "singularName": "blog",
+    "pluralName": "blogs",
+    "displayName": "Blog"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "author": {
+      "type": "string"
+    },
+    "content": {
+      "type": "blocks",
+      "required": true
+    },
+    "excerpt": {
+      "type": "text",
+      "required": true
+    },
+    "thumbnail": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "issued": {
+      "type": "datetime",
+      "required": true
+    },
+    "tag": {
+      "type": "enumeration",
+      "enum": [
+        "evento",
+        "convocatoria",
+        "noticia",
+        "general",
+        "platicas",
+        "taller"
+      ],
+      "required": true
+    },
+    "eventEnd": {
+      "type": "datetime"
+    }
+  }
+}

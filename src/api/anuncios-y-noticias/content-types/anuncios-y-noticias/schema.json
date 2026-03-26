@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "anuncio_y_noticia",
+  "info": {
+    "singularName": "anuncios-y-noticias",
+    "pluralName": "anuncio-y-noticia",
+    "displayName": "AnunciosYNoticias",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "excerpt": {
+      "type": "text",
+      "required": true
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "redirect": {
+      "type": "string",
+      "required": true
+    },
+    "issued": {
+      "type": "datetime"
+    },
+    "tag": {
+      "type": "enumeration",
+      "enum": [
+        "evento",
+        "convocatoria",
+        "noticia",
+        "general",
+        "platicas",
+        "taller"
+      ]
+    },
+    "eventEnd": {
+      "type": "datetime"
+    }
+  }
+}

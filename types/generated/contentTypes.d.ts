@@ -788,6 +788,78 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiAnunciosYNoticiasAnunciosYNoticias
+  extends Schema.CollectionType {
+  collectionName: 'anuncio_y_noticia';
+  info: {
+    singularName: 'anuncios-y-noticias';
+    pluralName: 'anuncio-y-noticia';
+    displayName: 'AnunciosYNoticias';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String & Attribute.Required;
+    excerpt: Attribute.Text & Attribute.Required;
+    thumbnail: Attribute.Media & Attribute.Required;
+    redirect: Attribute.String & Attribute.Required;
+    issued: Attribute.DateTime;
+    tag: Attribute.Enumeration<
+      ['evento', 'convocatoria', 'noticia', 'general', 'platicas', 'taller']
+    >;
+    eventEnd: Attribute.DateTime;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::anuncios-y-noticias.anuncios-y-noticias',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::anuncios-y-noticias.anuncios-y-noticias',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiBlogBlog extends Schema.CollectionType {
+  collectionName: 'blogs';
+  info: {
+    singularName: 'blog';
+    pluralName: 'blogs';
+    displayName: 'Blog';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String & Attribute.Required;
+    author: Attribute.String;
+    content: Attribute.Blocks & Attribute.Required;
+    excerpt: Attribute.Text & Attribute.Required;
+    thumbnail: Attribute.Media & Attribute.Required;
+    issued: Attribute.DateTime & Attribute.Required;
+    tag: Attribute.Enumeration<
+      ['evento', 'convocatoria', 'noticia', 'general', 'platicas', 'taller']
+    > &
+      Attribute.Required;
+    eventEnd: Attribute.DateTime;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::blog.blog', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::blog.blog', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface ApiEventEvent extends Schema.CollectionType {
   collectionName: 'events';
   info: {
@@ -820,6 +892,44 @@ export interface ApiEventEvent extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::event.event',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiGalleryGallery extends Schema.CollectionType {
+  collectionName: 'galleries';
+  info: {
+    singularName: 'gallery';
+    pluralName: 'galleries';
+    displayName: 'Gallery';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String & Attribute.Required;
+    description: Attribute.String & Attribute.Required;
+    date: Attribute.DateTime & Attribute.Required;
+    tag: Attribute.Enumeration<
+      ['evento', 'convocatoria', 'noticia', 'general', 'platicas', 'taller']
+    > &
+      Attribute.Required &
+      Attribute.DefaultTo<'general'>;
+    images: Attribute.Media & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::gallery.gallery',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::gallery.gallery',
       'oneToOne',
       'admin::user'
     > &
@@ -914,7 +1024,10 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::anuncios-y-noticias.anuncios-y-noticias': ApiAnunciosYNoticiasAnunciosYNoticias;
+      'api::blog.blog': ApiBlogBlog;
       'api::event.event': ApiEventEvent;
+      'api::gallery.gallery': ApiGalleryGallery;
       'api::proyect-opportunity.proyect-opportunity': ApiProyectOpportunityProyectOpportunity;
       'api::soy-lcc-video.soy-lcc-video': ApiSoyLccVideoSoyLccVideo;
     }
